@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub Issues Tracker</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+   
+</head>
+<body class="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+
+    <div class="card bg-white w-full max-w-md shadow-sm border border-gray-100 rounded-xl p-8">
+        <div class="flex flex-col items-center mb-8">
+            <i class="fa-brands fa-github text-7xl mb-4 text-[#1A1E23]"></i>
+            <h1 class="text-2xl font-bold text-gray-800">GitHub Issues Tracker</h1>
+            <p class="text-gray-500 text-sm mt-1">Sign in to manage your issues</p>
+        </div>
+
+        <div class="space-y-4">
+            <div class="form-control">
+                <label class="label pt-0"><span class="label-text font-bold text-gray-700">Username</span></label>
+                <input id="input-username" type="text" placeholder="Enter Username" class="input input-bordered w-full bg-white focus:outline-none focus:border-indigo-500" />
+                <span class="text-xs text-indigo-600 mt-1 ml-1">Default: admin</span>
+            </div>
+
+            <div class="form-control">
+                <label class="label pt-0"><span class="label-text font-bold text-gray-700">Password</span></label>
+                <input id="input-pin" type="password" placeholder="Enter Password" class="input input-bordered w-full bg-white focus:outline-none focus:border-indigo-500" />
+                <span class="text-xs text-indigo-600 mt-1 ml-1">Default: admin123</span>
+            </div>
+
+            <button id="singin-btn" class="btn btn-primary w-full bg-[#4F00FF] hover:bg-[#3F00CC] border-none text-white font-semibold text-lg mt-4 capitalize h-14">
+                Sign In
+            </button>
+        </div>
+
+        <div class="divider text-gray-400 text-sm my-8">OR</div>
+
+        <div class="text-center">
+            <p class="text-gray-500 text-sm mb-4">Demo Credentials:</p>
+            <div class="bg-slate-50 rounded-lg p-6 border border-gray-100">
+                <p class="text-gray-700"><strong>Username:</strong> admin</p>
+                <p class="text-gray-700"><strong>Password:</strong> admin123</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
