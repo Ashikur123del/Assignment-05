@@ -1,32 +1,29 @@
 const API_BASE = "https://phi-lab-server.vercel.app/api/v1/lab/issues";
-const issueContainer = document.getElementById("issue-container"); // HTML-এ কার্ড দেখানোর জায়গা
-const issueCount = document.getElementById("issue-count"); // ইস্যুর সংখ্যা দেখানোর জায়গা
+const issueContainer = document.getElementById("issue-container"); 
+const issueCount = document.getElementById("issue-count"); 
 
-// --- ১. ডেটা নিয়ে আসার ফাংশন ---
+// --- 1. Data Niay asar funtion ---
 async function fetchData(url) {
-    // ডেটা লোড হওয়ার সময় একটি স্পিনার দেখাবে
     issueContainer.innerHTML = `<span class="loading loading-spinner text-indigo-600"></span>`;
     const response = await fetch(url);
     const result = await response.json();
-    renderIssues(result.data); // ডেটা পাওয়ার পর তা রেন্ডার করবে
+    renderIssues(result.data); 
 }
-
-// --- ২. কার্ড রেন্ডারিং ফাংশন (Figma অনুযায়ী ডিজাইন) ---
+ 
+// --- Card reanding funtion 
 function renderIssues(issues) {
-    issueContainer.innerHTML = ""; // আগের কার্ডগুলো মুছে ফেলা
-    issueCount.innerText = `${issues.length} Issues`; // মোট ইস্যু সংখ্যা আপডেট করা
+    issueContainer.innerHTML = ""; 
+    issueCount.innerText = `${issues.length} Issues`; 
 
     issues.forEach(issue => {
-        // স্ট্যাটাস চেক করা (Open নাকি Closed)
         const isClosed = issue.status === "closed";
         const borderColor = isClosed ? "border-t-purple-500" : "border-t-emerald-500";
     
-        // নতুন কার্ড তৈরি করা
+   
         const card = document.createElement("div");
         card.className = `card bg-white border border-gray-200 ${borderColor} border-t-4 rounded-lg shadow-sm p-4 cursor-pointer hover:shadow-lg transition`;
-        card.onclick = () => showModal(issue.id); // ক্লিক করলে মোডাল দেখাবে
-    
-        // কার্ডের ভেতর কন্টেন্ট সেট করা
+        card.onclick = () => showModal(issue.id); 
+     
         card.innerHTML = `
             <div class="flex justify-between items-center mb-2">
                 <i class="fa-solid ${isClosed ? 'fa-check-circle text-purple-500' : 'fa-circle-notch text-emerald-500'}"></i>
@@ -48,16 +45,14 @@ function renderIssues(issues) {
     });
 }
 
-// --- ৩. ডাইনামিক মোডাল ফাংশন ---
+// --- 3.Model  ---
 async function showModal(id) {
-    // নির্দিষ্ট ইস্যুর বিস্তারিত ডেটা আনা
     const response = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`);
     const result = await response.json();
     const issue = result.data;
 
     const formattedDate = new Date(issue.createdAt).toLocaleDateString('en-GB');
 
-    // মোডাল শিরোনাম ও বর্ণনা সেট করা
     document.getElementById('modal-title').innerText = issue.title;
     document.getElementById('modal-desc').innerHTML = `
         <div class="flex items-center gap-2 mb-4">
@@ -84,19 +79,17 @@ async function showModal(id) {
         </div>
     `;
     
-    document.getElementById('issue_modal').showModal(); // মোডালটি প্রদর্শন করা
+    document.getElementById('issue_modal').showModal(); 
 }
 
-// --- ৪. ট্যাব ফিল্টারিং ফাংশন ---
+// --- 4. Tabs Filter Funtion ---
 async function handleFilter(status, btnElement) {
-    // ট্যাব স্টাইল রিসেট ও একটিভ করা
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('tab-active', 'bg-blue-700', 'text-white'));
     btnElement.classList.add('tab-active', 'bg-blue-700', 'text-white');
     
     const response = await fetch(API_BASE);
     const result = await response.json();
     
-    // স্ট্যাটাস অনুযায়ী ডেটা ফিল্টার করা
     if (status === 'all') {
         renderIssues(result.data);
     } else {
@@ -105,13 +98,14 @@ async function handleFilter(status, btnElement) {
     }
 }
 
-// --- ৫. সার্চ ফাংশন ---
+// --- ৫. Search field
+
 document.getElementById('search-btn').onclick = async () => {
     const searchText = document.getElementById('search-input').value;
     const response = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`);
     const result = await response.json();
-    renderIssues(result.data); // সার্চ রেজাল্ট কার্ডে দেখানো
+    renderIssues(result.data);
 };
 
-// অ্যাপ শুরু করার সময় প্রাথমিক ডেটা লোড করা
+
 fetchData(API_BASE);
