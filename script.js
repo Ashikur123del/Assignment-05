@@ -7,7 +7,7 @@ document.getElementById("singin-btn").addEventListener("click", () => {
 
     if (userName === "admin" && pin === "admin123") {
         alert("Login Successful!");
-        window.location.replace("/home.html");
+        window.location.replace("./home.html");
     } else {
         alert("Login failed! Please check your credentials.");
         inputUsername.value = '';
